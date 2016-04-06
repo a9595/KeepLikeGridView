@@ -7,15 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mUiRecyclerView;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private TravelListAdapter mAdapter;
     private boolean isGrid = false;
+    private EditText mUiIP1;
+    private EditText mUiIP2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,31 @@ public class MainActivity extends AppCompatActivity {
         mUiRecyclerView = (RecyclerView) findViewById(R.id.main_list);
         mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mUiRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
+
+        // setup edit text (ip)
+        mUiIP1 = (EditText) findViewById(R.id.main_ip1);
+        mUiIP2 = (EditText) findViewById(R.id.main_ip2);
+
+        mUiIP1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() >= 3){
+                    // TODO: focus on the next edit text
+                    mUiIP2.requestFocus();
+                }
+            }
+        });
+
 
         // setup adapter:
         mAdapter = new TravelListAdapter(this);
